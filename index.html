@@ -1,941 +1,142 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" 
-          content="width=device-width, initial-scale=1.0">
-    <title>Student Attendance Portal</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-.navbar {
-    background-color: #2c3e50;
-    color: white;
-    padding: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.navbar-brand {
-    font-size: 18px;
-}
-
-.navbar-links {
-    display: flex;
-}
-
-.navbar-links a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-}
-
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    color: #333;
-}
-
-label {
-    margin-top: 10px;
-    display: block;
-}
-
-select {
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #ecf0f1;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-strong {
-    margin-right: 10px;
-    flex-basis: auto;
-    flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-button {
-    padding: 8px;
-    cursor: pointer;
-    border: none;
-    color: white;
-    border-radius: 20px;
-}
-
-button.absent,
-button.present,
-button.leave {
-    background-color: black;
-}
-
-button {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-/* Responsive styles for mobile view */
-@media screen and (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-
-}
-
-#resultSection {
-    margin-top: 20px;
-}
-
-#resultSection h3 {
-    margin-top: 10px;
-}
-
-#resultSection p {
-    margin-bottom: 5px;
-}
-
-#resultSection span {
-    font-weight: bold;
-}
-
-
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-        }
-
-
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-.navbar {
-    background-color: #2c3e50;
-    color: white;
-    padding: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.navbar-brand {
-    font-size: 18px;
-}
-
-.navbar-links {
-    display: flex;
-}
-
-.navbar-links a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-}
-
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    color: #333;
-}
-
-label {
-    margin-top: 10px;
-    display: block;
-}
-
-select {
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #ecf0f1;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-strong {
-    margin-right: 10px;
-    flex-basis: auto;
-    flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-button {
-    padding: 8px;
-    cursor: pointer;
-    border: none;
-    color: white;
-    border-radius: 20px;
-}
-
-button.absent,
-button.present,
-button.leave {
-    background-color: black;
-}
-
-button {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-/* Responsive styles for mobile view */
-@media screen and (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-
-}
-
-#resultSection {
-    margin-top: 20px;
-}
-
-#resultSection h3 {
-    margin-top: 10px;
-}
-
-#resultSection p {
-    margin-bottom: 5px;
-}
-
-#resultSection span {
-    font-weight: bold;
-}
-    </style>
+<title>My Own Score Record</title>
+<style>
+body { font-size: 18px; }
+table { width: 90%; border-collapse: collapse; font-size: 16px; }
+th, td { border: 1px solid black; padding: 12px; }
+th { text-align: left; }
+input[type="text"] { font-size: 16px; padding: 8px; width: 100%; box-sizing: border-box; }
+button { font-size: 16px; padding: 8px 12px; }
+input[type="file"] { display: none; }
+img { max-width: 100px; max-height: 100px; display: block; margin-top: 5px; }
+</style>
 </head>
-
 <body>
 
-    <div class="navbar">
-        <div class="navbar-brand">
-            <h1> 
-                Banahaw Attendance
-            </h1>
-        </div>
-        <div class="navbar-links">
-            <p>
-                Academic Year: 
-                <span id="academicYear">2024-2025</span>
-            </p>
-            <!-- Add other relevant information -->
-        </div>
-    </div>
+<input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable()">
 
-    <div class="container">
-        <div id="formSection">
-            <h2>Mark Attendance</h2>
-            <button id="addStudentButton" 
-                onclick="showAddStudentForm()">
-                Add Student
-            </button>
-            <button id="addClassButton" 
-                onclick="showAddClassForm()">
-                Add Class
-            </button>
+<table>
+  <thead>
+    <tr>
+      <th>Assessment Name</th>
+      <th>Score</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
 
-            <label for="classSelector">Class:</label>
-            <select id="classSelector" required 
-                onchange="showStudentsList()">
-                <!-- Populate classes dynamically -->
-            </select>
+<input type="text" id="newCol1" placeholder="Assessment Name">
+<input type="text" id="newCol2" placeholder="Score">
+<button onclick="addRow()">Add Row</button>
 
-            <ul id="studentsList">
-                <!-- Populate students dynamically 
-                    based on the selected class -->
-            </ul>
-
-            <div id="summarySection">
-                <h3>Summary</h3>
-                <p>
-                    Total Students: 
-                    <span id="totalStudents">0</span>
-                </p>
-                <p>
-                    Total Present: 
-                    <span id="totalPresent">0</span>
-                </p>
-                <p>
-                    Total Absent: 
-                    <span id="totalAbsent">0</span>
-                </p>
-                <p>
-                    Total Leave: 
-                    <span id="totalLeave">0</span>
-                </p>
-            </div>
-
-            <button onclick="submitAttendance()">
-                Submit Attendance
-            </button>
-
-            <!-- Result Section -->
-            <div id="resultSection" style="display: none;">
-                <h3>Attendance Result</h3>
-                <p>
-                    Date: 
-                    <span id="attendanceDate"></span>
-                </p>
-                <p>
-                    Time: 
-                    <span id="attendanceTime"></span>
-                </p>
-                <p>
-                    Class: 
-                    <span id="attendanceClass"></span>
-                </p>
-                <p>
-                    Total Students: 
-                    <span id="attendanceTotalStudents"></span>
-                </p>
-                <p>
-                    Present: 
-                    <span id="attendancePresent"></span>
-                </p>
-                <p>
-                    Absent: 
-                    <span id="attendanceAbsent"></span>
-                </p>
-                <p>
-                    Leave: 
-                    <span id="attendanceLeave"></span>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div id="addStudentPopup" class="popup">
-        <h2>Add Student</h2>
-        <!-- Add Student Form Content -->
-        <label for="newStudentName">
-            Student Name:
-        </label>
-        <input type="text" id="newStudentName" required>
-        <label for="newStudentRoll">
-            Roll Number:
-        </label>
-        <input type="text" id="newStudentRoll" required>
-        <!-- Add more fields as needed -->
-
-        <button onclick="addStudent()">
-            submit
-        </button>
-        <button onclick="closePopup()">
-            Cancel
-        </button>
-    </div>
-
-    <div id="addClassPopup" class="popup">
-        <h2>Add Class</h2>
-        <!-- Add Class Form Content -->
-        <label for="newClassName">
-            Class Name:
-        </label>
-        <input type="text" id="newClassName" required>
-        <!-- Add more fields as needed -->
-
-        <button onclick="addClass()">
-            Submit
-        </button>
-        <button onclick="closePopup()">
-            Cancel
-        </button>
-    </div>
-
-    <script src="script.js"></script>
 <script>
-//script.js
-document.addEventListener("DOMContentLoaded",
-    function () {
-        populateClasses();
-        showStudentsList();
-    });
+  // Create a unique localStorage key based on the URL
+  const storageKey = 'tableData_' + window.location.pathname;
+  let data = JSON.parse(localStorage.getItem(storageKey)) || [];
 
-function showAddStudentForm() {
-    document.getElementById('addStudentPopup').
-        style.display = 'block';
-}
+  function updateLocalStorage() {
+    localStorage.setItem(storageKey, JSON.stringify(data));
+  }
 
-function showAddClassForm() {
-    // Show the add class popup
-    document.getElementById('addClassPopup').
-        style.display = 'block';
-}
+  function updateData(rowIndex, colIndex, value) {
+    data[rowIndex][colIndex] = value;
+    updateLocalStorage();
+    renderTable();
+  }
 
-function addStudent() {
-    // Get input values
-    const newStudentName = document.
-        getElementById('newStudentName').value;
-    const newStudentRoll = document.
-        getElementById('newStudentRoll').value;
+  function deleteRow(rowIndex) {
+    data.splice(rowIndex, 1);
+    updateLocalStorage();
+    renderTable();
+  }
 
-    if (!newStudentName || !newStudentRoll) {
-        alert("Please provide both name and roll number.");
-        return;
+  function addRow() {
+    const newName = document.getElementById('newCol1').value.trim();
+    const newScore = document.getElementById('newCol2').value.trim();
+    
+    if (!newName || !newScore) {
+      alert('Please enter both Assessment Name and Score.');
+      return;
     }
+    
+    const newRow = [newName, newScore, '']; // Empty image placeholder
+    data.push(newRow);
+    document.getElementById('newCol1').value = '';
+    document.getElementById('newCol2').value = '';
+    updateLocalStorage();
+    renderTable();
+  }
 
-    // Add the new student to the list
-    const classSelector = document.
-        getElementById('classSelector');
-    const selectedClass = classSelector.
-        options[classSelector.selectedIndex].value;
-    const studentsList = document.
-        getElementById('studentsList');
+  function renderTable() {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
 
-    const listItem = document.createElement('li');
-    listItem.setAttribute('data-roll-number', newStudentRoll);
-    listItem.innerHTML =
-        `<strong>
-            ${newStudentName}
-        </strong> 
-        (Roll No. ${newStudentRoll})`;
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const filteredData = data.filter(row => row.some(cell => cell && cell.toString().toLowerCase().includes(searchTerm)));
 
-    const absentButton =
-        createButton('A', 'absent',
-            () => markAttendance('absent', listItem, selectedClass));
-    const presentButton =
-        createButton('P', 'present',
-            () => markAttendance('present', listItem, selectedClass));
-    const leaveButton =
-        createButton('L', 'leave',
-            () => markAttendance('leave', listItem, selectedClass));
-
-    listItem.appendChild(absentButton);
-    listItem.appendChild(presentButton);
-    listItem.appendChild(leaveButton);
-
-    studentsList.appendChild(listItem);
-    saveStudentsList(selectedClass);
-    closePopup();
-}
-
-function addClass() {
-    const newClassName = document.
-        getElementById('newClassName').value;
-
-    if (!newClassName) {
-        alert("Please provide a class name.");
-        return;
-    }
-
-    // Add the new class to the class selector
-    const classSelector = document.
-        getElementById('classSelector');
-    const newClassOption = document.
-        createElement('option');
-    newClassOption.value = newClassName;
-    newClassOption.text = newClassName;
-    classSelector.add(newClassOption);
-    saveClasses();
-    closePopup();
-}
-
-function submitAttendance() {
-    const classSelector = document.
-        getElementById('classSelector');
-
-    if (!classSelector || !classSelector.options ||
-        classSelector.selectedIndex === -1) {
-        console.error
-            ('Class selector is not properly defined or has no options.');
-        return;
-    }
-
-    const selectedClass = classSelector.
-        options[classSelector.selectedIndex].value;
-
-    if (!selectedClass) {
-        console.error('Selected class is not valid.');
-        return;
-    }
-
-    const studentsList =
-        document.getElementById('studentsList');
-
-    // Check if attendance is already submitted 
-    // for the selected class
-    const isAttendanceSubmitted =
-        isAttendanceSubmittedForClass(selectedClass);
-
-    if (isAttendanceSubmitted) {
-        // If attendance is submitted, hide the 
-        // summary and show the attendance result
-        document.getElementById('summarySection').
-            style.display = 'none';
-        showAttendanceResult(selectedClass);
-    } else {
-        // If attendance is not submitted, show the summary
-        document.getElementById('summarySection').
-            style.display = 'block';
-        document.getElementById('resultSection').
-            style.display = 'none';
-    }
-    // Clear the student list and reset the form
-    studentsList.innerHTML = '';
-}
-
-function isAttendanceSubmittedForClass(selectedClass) {
-    const savedAttendanceData = JSON.parse
-        (localStorage.getItem('attendanceData')) || [];
-    return savedAttendanceData.some
-        (record => record.class === selectedClass);
-}
-
-function showAttendanceResult(selectedClass) {
-    const resultSection = document.
-        getElementById('resultSection');
-
-    if (!resultSection) {
-        console.error('Result section is not properly defined.');
-        return;
-    }
-
-    const now = new Date();
-    const date =
-        `${now.getFullYear()}-${String(now.getMonth() + 1).
-        padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    const time =
-        `${String(now.getHours()).padStart(2, '0')}:
-        ${String(now.getMinutes()).padStart(2, '0')}:
-        ${String(now.getSeconds()).padStart(2, '0')}`;
-
-    // Retrieve attendance data from local storage
-    const savedAttendanceData = JSON.parse
-        (localStorage.getItem('attendanceData')) || [];
-    const filteredAttendanceData = savedAttendanceData.
-        filter(record => record.class === selectedClass);
-
-    const totalStudents = filteredAttendanceData.
-    reduce((acc, record) => {
-        if (!acc.includes(record.name)) {
-            acc.push(record.name);
+    filteredData.forEach((row, rowIndex) => {
+      const newRow = tbody.insertRow();
+      row.forEach((cell, colIndex) => {
+        const cellElement = newRow.insertCell();
+        if (colIndex === 2) { // Image column
+          const img = document.createElement('img');
+          img.src = cell || '';
+          img.alt = 'No Image';
+          cellElement.appendChild(img);
+          
+          const fileInput = document.createElement('input');
+          fileInput.type = 'file';
+          fileInput.accept = 'image/*';
+          fileInput.style.display = 'none';
+          fileInput.onchange = function () {
+            const file = fileInput.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                const imgFormat = new Image();
+                imgFormat.onload = () => {
+                  img.src = e.target.result;
+                  updateData(rowIndex, colIndex, e.target.result);
+                };
+                imgFormat.src = e.target.result;
+              };
+              reader.readAsDataURL(file);
+            }
+          };
+          
+          const chooseImageButton = document.createElement('button');
+          chooseImageButton.textContent = 'Choose Image';
+          chooseImageButton.onclick = () => fileInput.click();
+          
+          cellElement.appendChild(fileInput);
+          cellElement.appendChild(chooseImageButton);
+        } else {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = cell;
+          input.addEventListener('change', () => updateData(rowIndex, colIndex, input.value));
+          cellElement.appendChild(input);
         }
-        return acc;
-    }, []).length;
-
-    const totalPresent = filteredAttendanceData.
-        filter(record => record.status === 'present').length;
-    const totalAbsent = filteredAttendanceData.
-        filter(record => record.status === 'absent').length;
-    const totalLeave = filteredAttendanceData.
-        filter(record => record.status === 'leave').length;
-
-    // Update the result section
-    document.getElementById('attendanceDate').
-        innerText = date;
-    document.getElementById('attendanceTime').
-        innerText = time;
-    document.getElementById('attendanceClass').
-        innerText = selectedClass;
-    document.getElementById('attendanceTotalStudents').
-        innerText = totalStudents;
-    document.getElementById('attendancePresent').
-        innerText = totalPresent;
-    document.getElementById('attendanceAbsent').
-        innerText = totalAbsent;
-    document.getElementById('attendanceLeave').
-        innerText = totalLeave;
-
-    // Show the attendance result section
-    resultSection.style.display = 'block';
-}
-
-function closePopup() {
-    // Close the currently open popup
-    document.getElementById('addStudentPopup').
-        style.display = 'none';
-    document.getElementById('addClassPopup').
-        style.display = 'none';
-}
-
-function createButton(text, status, onClick) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.innerText = text;
-    button.className = status;
-    button.onclick = onClick;
-    return button;
-}
-
-function populateClasses() {
-    // Retrieve classes from local storage
-    const savedClasses = JSON.parse
-        (localStorage.getItem('classes')) || [];
-    const classSelector = 
-        document.getElementById('classSelector');
-
-    savedClasses.forEach(className => {
-        const newClassOption = 
-            document.createElement('option');
-        newClassOption.value = className;
-        newClassOption.text = className;
-        classSelector.add(newClassOption);
+      });
+      
+      const actionsCell = newRow.insertCell();
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.onclick = () => deleteRow(rowIndex);
+      actionsCell.appendChild(deleteButton);
     });
-}
+  }
 
-function showStudentsList() {
-    const classSelector = 
-        document.getElementById('classSelector');
-    const selectedClass = classSelector.
-        options[classSelector.selectedIndex].value;
+  function searchTable() {
+    renderTable();
+  }
 
-    const studentsList = 
-        document.getElementById('studentsList');
-    studentsList.innerHTML = '';
-
-    // Retrieve students from local storage
-    const savedStudents = JSON.parse
-        (localStorage.getItem('students')) || {};
-    const selectedClassStudents = 
-        savedStudents[selectedClass] || [];
-
-    selectedClassStudents.forEach(student => {
-        const listItem = document.createElement('li');
-        listItem.setAttribute
-            ('data-roll-number', student.rollNumber);
-        listItem.innerHTML = 
-            `<strong>
-                ${student.name}
-            </strong> 
-            (Roll No. ${student.rollNumber})`;
-
-        const absentButton = createButton('A', 'absent', 
-            () => markAttendance('absent', listItem, selectedClass));
-        const presentButton = createButton('P', 'present', 
-            () => markAttendance('present', listItem, selectedClass));
-        const leaveButton = createButton('L', 'leave', 
-            () => markAttendance('leave', listItem, selectedClass));
-
-        const savedColor = getSavedColor
-            (selectedClass, student.rollNumber);
-        if (savedColor) {
-            listItem.style.backgroundColor = savedColor;
-        }
-
-        listItem.appendChild(absentButton);
-        listItem.appendChild(presentButton);
-        listItem.appendChild(leaveButton);
-
-        studentsList.appendChild(listItem);
-    });
-
-    // Check if attendance for the 
-    // selected class has been submitted
-    const resultSection = document.
-        getElementById('resultSection');
-    const isAttendanceSubmitted = 
-        resultSection.style.display === 'block';
-
-    // Show the appropriate section based 
-    // on the attendance submission status
-    if (isAttendanceSubmitted) {
-        // Attendance has been submitted, 
-        // show the attendance result
-        showAttendanceResult(selectedClass);
-    } else {
-        // Attendance not submitted, 
-        // show the normal summary
-        showSummary(selectedClass);
-    }
-}
-
-function showAttendanceResult(selectedClass) {
-    const resultSection = 
-        document.getElementById('resultSection');
-
-    if (!resultSection) {
-        console.error('Result section is not properly defined.');
-        return;
-    }
-
-    const now = new Date();
-    const date = 
-        `${now.getFullYear()}-${String(now.getMonth() + 1).
-        padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    const time = 
-        `${String(now.getHours()).padStart(2, '0')}:
-        ${String(now.getMinutes()).padStart(2, '0')}:
-        ${String(now.getSeconds()).padStart(2, '0')}`;
-
-    // Retrieve attendance data from local storage
-    const savedAttendanceData = JSON.parse
-        (localStorage.getItem('attendanceData')) || [];
-    const filteredAttendanceData = savedAttendanceData.
-        filter(record => record.class === selectedClass);
-
-    const totalStudents = filteredAttendanceData.
-    reduce((acc, record) => {
-        if (!acc.includes(record.name)) {
-            acc.push(record.name);
-        }
-        return acc;
-    }, []).length;
-
-    const totalPresent = filteredAttendanceData.
-        filter(record => record.status === 'present').length;
-    const totalAbsent = filteredAttendanceData.
-        filter(record => record.status === 'absent').length;
-    const totalLeave = filteredAttendanceData.
-        filter(record => record.status === 'leave').length;
-
-    // Update the result section
-    const resultContent = 
-        `Date: ${date} | Time: ${time} | 
-        Total Students: ${totalStudents} | 
-        Present: ${totalPresent} | 
-        Absent: ${totalAbsent} | Leave: ${totalLeave}`;
-    resultSection.innerHTML = resultContent;
-
-    // Show the result section
-    resultSection.style.display = 'block';
-
-    // Show the list of students below the result section
-    const studentsListHTML = 
-        generateStudentsListHTML(filteredAttendanceData);
-    resultSection.insertAdjacentHTML
-        ('afterend', studentsListHTML);
-}
-
-
-function markAttendance
-    (status, listItem, selectedClass) {
-    // Find the corresponding student name
-    const studentName = listItem.
-        querySelector('strong').innerText;
-
-    // Update the background color of the student 
-    // row based on the attendance status
-    listItem.style.backgroundColor = 
-        getStatusColor(status);
-
-    // Save the background color to local storage
-    saveColor(selectedClass, 
-        listItem.getAttribute('data-roll-number'), 
-        getStatusColor(status));
-
-    // Update the attendance record for the specific student
-    updateAttendanceRecord(studentName, selectedClass, status);
-
-    // Show the summary for the selected class
-    showSummary(selectedClass);
-}
-
-function getStatusColor(status) {
-    switch (status) {
-        case 'absent':
-            return '#e74c3c';
-        case 'present':
-            return '#2ecc71';
-        case 'leave':
-            return '#f39c12';
-        default:
-            return '';
-    }
-}
-
-function updateAttendanceRecord
-    (studentName, selectedClass, status) {
-    // Retrieve existing attendance data from local storage
-    const savedAttendanceData = JSON.parse
-        (localStorage.getItem('attendanceData')) || [];
-
-    // Check if the record already exists
-    const existingRecordIndex = savedAttendanceData.
-        findIndex(record => record.name === studentName && 
-            record.class === selectedClass);
-
-    if (existingRecordIndex !== -1) {
-        // Update the existing record
-        savedAttendanceData[existingRecordIndex].
-            status = status;
-        savedAttendanceData[existingRecordIndex].
-            date = getCurrentDate();
-    } else {
-        // Add a new record
-        savedAttendanceData.push(
-            { 
-                name: studentName, class: selectedClass, 
-                status: status, date: getCurrentDate() 
-            });
-    }
-
-    // Save updated attendance data to local storage
-    localStorage.setItem('attendanceData', 
-        JSON.stringify(savedAttendanceData));
-}
-
-function showSummary(selectedClass) {
-    const savedAttendanceData = JSON.parse
-        (localStorage.getItem('attendanceData')) || [];
-
-    // Filter attendance data based on the selected class
-    const filteredAttendanceData = savedAttendanceData.
-        filter(record => record.class === selectedClass);
-
-    const totalStudents = filteredAttendanceData.
-    reduce((acc, record) => {
-        if (!acc.includes(record.name)) {
-            acc.push(record.name);
-        }
-        return acc;
-    }, []).length;
-
-    const totalPresent = filteredAttendanceData.
-        filter(record => record.status === 'present').length;
-    const totalAbsent = filteredAttendanceData.
-        filter(record => record.status === 'absent').length;
-    const totalLeave = filteredAttendanceData.
-        filter(record => record.status === 'leave').length;
-
-    document.getElementById('totalStudents').
-        innerText = totalStudents;
-    document.getElementById('totalPresent').
-        innerText = totalPresent;
-    document.getElementById('totalAbsent').
-        innerText = totalAbsent;
-    document.getElementById('totalLeave').
-        innerText = totalLeave;
-}
-
-function getCurrentDate() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).
-        padStart(2, '0');
-    const day = String(now.getDate()).
-        padStart(2, '0');
-    return `${year}-${month}-${day}`;
-}
-
-function saveClasses() {
-    // Save classes to local storage
-    const classSelector = document.
-        getElementById('classSelector');
-    const savedClasses = Array.from(classSelector.options).
-        map(option => option.value);
-    localStorage.setItem('classes', 
-        JSON.stringify(savedClasses));
-}
-
-function saveStudentsList(selectedClass) {
-    // Save the updated student list to local storage
-    const studentsList = document.
-        getElementById('studentsList');
-    const savedStudents = JSON.parse
-        (localStorage.getItem('students')) || {};
-    const selectedClassStudents = Array.from(studentsList.children).
-    map(item => {
-        return {
-            name: item.querySelector('strong').innerText,
-            rollNumber: item.getAttribute('data-roll-number')
-        };
-    });
-
-    savedStudents[selectedClass] = selectedClassStudents;
-    localStorage.setItem
-        ('students', JSON.stringify(savedStudents));
-}
-
-function saveColor(selectedClass, rollNumber, color) {
-    const savedColors = JSON.parse
-    (localStorage.getItem('colors')) || {};
-    if (!savedColors[selectedClass]) {
-        savedColors[selectedClass] = {};
-    }
-    savedColors[selectedClass][rollNumber] = color;
-    localStorage.setItem('colors', 
-        JSON.stringify(savedColors));
-}
-
-function getSavedColor(selectedClass, rollNumber) {
-    const savedColors = JSON.parse
-        (localStorage.getItem('colors')) || {};
-    return savedColors[selectedClass] ? 
-        savedColors[selectedClass][rollNumber] : null;
-}
+  renderTable();
 </script>
 
-
-
-
-
 </body>
-
 </html>
