@@ -5,22 +5,25 @@
 <style>
 body { font-size: 18px; }
 table { width: 90%; border-collapse: collapse; font-size: 16px; }
-th, td { border: 1px solid black; padding: 12px; }
-th { text-align: left; }
-input[type="text"] { font-size: 16px; padding: 8px; width: 100%; box-sizing: border-box; }
-button { font-size: 16px; padding: 8px 12px; }
+th, td { border: 1px solid black; padding: 12px; text-align: left; }
+input[type="text"], input[type="number"] { font-size: 16px; padding: 8px; width: 100%; box-sizing: border-box; }
+button { font-size: 16px; padding: 8px 12px; margin: 5px; }
 input[type="file"] { display: none; }
 img { max-width: 100px; max-height: 100px; display: block; margin-top: 5px; }
 </style>
 </head>
 <body>
 
-<input type="text" id="searchInput" placeholder="Search..." onkeyup="searchTable()">
+<!-- Search Bars -->
+<input type="text" id="searchInput" placeholder="Search students/assessments..." onkeyup="renderTable()">
+<input type="text" id="assessmentSearch" placeholder="Search assessment for total..." onkeyup="calculateTotals()">
 
 <table>
   <thead>
     <tr>
+      <th>Name</th>
       <th>Assessment Name</th>
+      <th>Assessment Number</th>
       <th>Score</th>
       <th>Image</th>
       <th>Actions</th>
@@ -29,12 +32,17 @@ img { max-width: 100px; max-height: 100px; display: block; margin-top: 5px; }
   <tbody id="tableBody"></tbody>
 </table>
 
-<input type="text" id="newCol1" placeholder="Assessment Name">
-<input type="text" id="newCol2" placeholder="Score">
+<!-- Add Row Inputs -->
+<input type="text" id="newName" placeholder="Student Name">
+<input type="text" id="newAssessment" placeholder="Assessment Name">
+<input type="number" id="newAssessmentNumber" placeholder="Assessment Number">
+<input type="number" id="newScore" placeholder="Score">
 <button onclick="addRow()">Add Row</button>
 
+<h2>Total Scores</h2>
+<div id="totalScores"></div>
+
 <script>
-  // Create a unique localStorage key based on the URL
   const storageKey = 'tableData_' + window.location.pathname;
   let data = JSON.parse(localStorage.getItem(storageKey)) || [];
 
@@ -43,7 +51,7 @@ img { max-width: 100px; max-height: 100px; display: block; margin-top: 5px; }
   }
 
   function updateData(rowIndex, colIndex, value) {
-    data[rowIndex][colIndex] = value;
+    data[rowIndex][colIndex] = colIndex === 3 ? parseFloat(value) || 0 : value;
     updateLocalStorage();
     renderTable();
   }
@@ -55,20 +63,46 @@ img { max-width: 100px; max-height: 100px; display: block; margin-top: 5px; }
   }
 
   function addRow() {
-    const newName = document.getElementById('newCol1').value.trim();
-    const newScore = document.getElementById('newCol2').value.trim();
-    
-    if (!newName || !newScore) {
-      alert('Please enter both Assessment Name and Score.');
+    const newName = document.getElementById('newName').value.trim();
+    const newAssessment = document.getElementById('newAssessment').value.trim();
+    const newAssessmentNumber = document.getElementById('newAssessmentNumber').value.trim();
+    const newScore = parseFloat(document.getElementById('newScore').value.trim());
+
+    if (!newName || !newAssessment || !newAssessmentNumber || isNaN(newScore)) {
+      alert('Please enter valid Name, Assessment, Assessment Number, and Score.');
       return;
     }
-    
-    const newRow = [newName, newScore, '']; // Empty image placeholder
-    data.push(newRow);
-    document.getElementById('newCol1').value = '';
-    document.getElementById('newCol2').value = '';
+
+    data.push([newName, newAssessment, newAssessmentNumber, newScore, '']);
+    document.getElementById('newName').value = '';
+    document.getElementById('newAssessment').value = '';
+    document.getElementById('newAssessmentNumber').value = '';
+    document.getElementById('newScore').value = '';
     updateLocalStorage();
     renderTable();
+  }
+
+  function calculateTotals() {
+    let totals = {};
+    const assessmentFilter = document.getElementById('assessmentSearch').value.toLowerCase();
+
+    data.forEach(row => {
+      const student = row[0];
+      const assessment = row[1].toLowerCase();
+      const score = parseFloat(row[3]) || 0;
+
+      if (assessmentFilter && !assessment.includes(assessmentFilter)) return; // Filter by assessment name
+
+      const key = `${student} - ${row[1]}`;
+      totals[key] = (totals[key] || 0) + score;
+    });
+
+    let totalDiv = document.getElementById('totalScores');
+    totalDiv.innerHTML = "<strong>Total Scores by Student & Assessment:</strong><br>";
+
+    for (let key in totals) {
+      totalDiv.innerHTML += `${key}: ${totals[key]}<br>`;
+    }
   }
 
   function renderTable() {
@@ -76,18 +110,18 @@ img { max-width: 100px; max-height: 100px; display: block; margin-top: 5px; }
     tbody.innerHTML = '';
 
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const filteredData = data.filter(row => row.some(cell => cell && cell.toString().toLowerCase().includes(searchTerm)));
+    const filteredData = data.filter(row => row.some(cell => cell.toString().toLowerCase().includes(searchTerm)));
 
     filteredData.forEach((row, rowIndex) => {
       const newRow = tbody.insertRow();
       row.forEach((cell, colIndex) => {
         const cellElement = newRow.insertCell();
-        if (colIndex === 2) { // Image column
+        if (colIndex === 4) { // Image column
           const img = document.createElement('img');
           img.src = cell || '';
           img.alt = 'No Image';
           cellElement.appendChild(img);
-          
+
           const fileInput = document.createElement('input');
           fileInput.type = 'file';
           fileInput.accept = 'image/*';
@@ -97,42 +131,36 @@ img { max-width: 100px; max-height: 100px; display: block; margin-top: 5px; }
             if (file) {
               const reader = new FileReader();
               reader.onload = (e) => {
-                const imgFormat = new Image();
-                imgFormat.onload = () => {
-                  img.src = e.target.result;
-                  updateData(rowIndex, colIndex, e.target.result);
-                };
-                imgFormat.src = e.target.result;
+                img.src = e.target.result;
+                updateData(rowIndex, colIndex, e.target.result);
               };
               reader.readAsDataURL(file);
             }
           };
-          
+
           const chooseImageButton = document.createElement('button');
           chooseImageButton.textContent = 'Choose Image';
           chooseImageButton.onclick = () => fileInput.click();
-          
+
           cellElement.appendChild(fileInput);
           cellElement.appendChild(chooseImageButton);
         } else {
           const input = document.createElement('input');
-          input.type = 'text';
+          input.type = colIndex === 3 ? 'number' : 'text';
           input.value = cell;
           input.addEventListener('change', () => updateData(rowIndex, colIndex, input.value));
           cellElement.appendChild(input);
         }
       });
-      
+
       const actionsCell = newRow.insertCell();
       const deleteButton = document.createElement('button');
       deleteButton.textContent = 'Delete';
       deleteButton.onclick = () => deleteRow(rowIndex);
       actionsCell.appendChild(deleteButton);
     });
-  }
 
-  function searchTable() {
-    renderTable();
+    calculateTotals();
   }
 
   renderTable();
